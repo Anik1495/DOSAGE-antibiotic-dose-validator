@@ -1,4 +1,4 @@
-# 🧬 DOSAGE Validator — Rule-Based Antibiotic Dose Checker
+# 🧬 DOSAGE: An intelligent decision-support tool designed to help validate antibiotic prescriptions based on patient-specific parameters
 
 **License**: MIT (code) — see `data/SOURCE.md` for the dataset's own license (CC BY 4.0)  
 **Authors**:  
