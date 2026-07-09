@@ -1,0 +1,354 @@
+/* Global Styles */
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  margin: 0;
+  padding: 0 10px; /* horizontal padding */
+  background-color: #f4f4f9;
+  color: #333;
+  line-height: 1.6;
+}
+
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 20px;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 10px;
+  color: #2c3e50;
+}
+
+h2 {
+    color: #34495e;
+}
+
+/* Form Section */
+.form-section {
+  background: #fff;
+  padding: 25px;
+  margin-bottom: 30px;
+  border-radius: 8px;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+}
+
+.form-section h2 {
+  margin-top: 0;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+input,
+select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 14px;
+  height: 42px;
+  background-color: white;
+  transition: border-color 0.2s;
+}
+
+input:focus, select:focus {
+    border-color: #4CAF50;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+}
+
+button {
+  display: inline-block;
+  padding: 12px 20px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: background-color 0.2s;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+#download-button {
+    background-color: #007bff;
+}
+
+#download-button:hover {
+    background-color: #0069d9;
+}
+
+/* Flex row for input layouts */
+.flex-row {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 15px;
+  flex-wrap: wrap; /* Allow wrapping on small screens */
+}
+
+.flex-row .flex-1 { flex: 1; min-width: 150px; }
+.flex-row .flex-2 { flex: 2; min-width: 250px; }
+.flex-row .flex-3 { flex: 3; min-width: 300px; }
+
+
+/* Table Styles */
+.table-container {
+  max-height: 500px; /* Increased height */
+  overflow: auto; /* Use auto for scrollbars only when needed */
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-top: 20px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+  white-space: nowrap; /* Prevent text wrapping in cells */
+}
+
+th {
+  background-color: #f8f9fa;
+  font-weight: 600;
+  /* --- STICKY HEADER --- */
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.1);
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+tbody tr:hover {
+    background-color: #e9ecef;
+}
+
+/* Single and Batch Result Formatting */
+.result {
+  margin-top: 20px;
+}
+
+#single-result-text {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  font-family: inherit; /* Use body font */
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+#single-result-text h3 {
+  font-size: 1.25rem;
+  color: #333;
+}
+#single-result-text h4 {
+  margin-top: 1.2em;
+  margin-bottom: 0.5em;
+  color: #444;
+  border-bottom: 1px solid #e5e5e5;
+  padding-bottom: 5px;
+  font-size: 1.1rem;
+}
+#single-result-text p {
+  margin: 0.5em 0;
+  padding-left: 10px;
+}
+#single-result-text hr {
+  border: 0;
+  border-top: 1px solid #e5e5e5;
+  margin: 1.5em 0;
+}
+
+/* === NEW: BATCH RESULT COLOR-CODING === */
+
+/* Style for positive/good status */
+td.status-yes,
+td.status-appropriate,
+td.status-not-required {
+  background-color: #e8f5e9 !important; /* Light green */
+  color: #1b5e20;
+  font-weight: 500;
+}
+
+/* Style for negative/error status */
+td.status-overdose,
+td.status-underdose,
+td.status-error,
+td.status-overdose-renal,
+td.status-age-missed,
+td.status-weight-missed,
+td.status-administration-error {
+  background-color: #ffebee !important; /* Light red */
+  color: #c62828;
+  font-weight: bold;
+}
+
+/* Style for warning/informational status */
+td.status-warning,
+td.status-no-match,
+td.status-not-recommended,
+td.status-not-found,
+td.status-data-not-available,
+td.status-crcl-90 { /* This works with the updated JS class name generation */
+  background-color: #fffde7 !important; /* Light yellow */
+  color: #f57f17;
+  font-weight: 500;
+}
+
+#single-result-text p {
+  margin: 0.8em 0; /* Add some vertical spacing between lines */
+  font-size: 1.05rem;
+}
+
+#single-result-text .status-red {
+  color: #c62828; /* Same red as the table */
+  font-weight: bold;
+}
+
+#single-result-text .status-green {
+  color: #1b5e20; /* Same green as the table */
+  font-weight: bold;
+}
+
+#single-result-text .details-message {
+  color: #555; /* A dark gray for messages */
+  font-size: 0.95em;
+  padding-left: 20px; /* Indent details for clarity */
+  margin-top: -0.5em; /* Bring details closer to their parent status */
+}
+
+#single-result-text .details-gray {
+  color: #777; /* A lighter gray for less important info */
+  font-style: italic;
+  font-size: 0.9em;
+  padding-left: 20px;
+}
+
+#single-result-text hr {
+  border: 0;
+  border-top: 1px solid #e5e5e5;
+  margin: 1.5em 0;
+}
+
+/* Container for the batch form and instructions */
+.batch-container {
+  display: flex;
+  gap: 25px; /* Space between the form and the box */
+  flex-wrap: wrap; /* Allows the box to wrap below on small screens */
+  align-items: flex-start; /* Aligns items to the top */
+}
+
+/* Style for the form area */
+.batch-form {
+  flex: 1; /* Takes up available space */
+  min-width: 300px; /* Prevents it from getting too small */
+}
+
+/* Style for the new instruction box */
+.instruction-box {
+  flex: 1; /* Takes up available space */
+  min-width: 300px; /* Prevents it from getting too small */
+  background-color: #eef7ff; /* A light blue background */
+  border: 1px solid #b3d7f5; /* A matching border */
+  border-radius: 8px;
+  padding: 15px 20px;
+  font-size: 14px;
+}
+
+.instruction-box h4 {
+  margin-top: 0;
+  color: #0d47a1; /* A darker blue for the heading */
+  border-bottom: 1px solid #b3d7f5;
+  padding-bottom: 8px;
+  margin-bottom: 15px;
+}
+
+.instruction-box ul {
+  list-style-type: none;
+  padding-left: 0; 
+  margin: 15px 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); /* smaller min width */
+  gap: 10px;
+}
+
+.instruction-box li {
+  background-color: #dceaf7;
+  /* Increased padding for better spacing */
+  padding: 10px 12px; 
+  border-radius: 6px;
+  text-align: center;
+}
+
+.instruction-box li code {
+  font-family: monospace;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.instruction-box li span {
+  display: block;
+  margin-top: 4px;
+  font-size: 12px;
+  font-weight: normal;
+  color: #555;
+  font-family: Arial, sans-serif;
+  font-style: italic; /* The key change for the italic look */
+}
+
+/* This is a best-practice rule to prevent padding from breaking layouts */
+* {
+  box-sizing: border-box;
+}
+
+/* Apply these styles ONLY when the screen is 800px wide or less */
+@media (max-width: 800px) {
+  
+  /* 1. Stack the main containers vertically */
+  .batch-container {
+    flex-direction: column;
+    gap: 20px; /* Adjust gap for vertical stacking */
+  }
+
+  /* 2. Remove rigid widths from the form and instruction box */
+  .batch-form, 
+  .instruction-box {
+    flex: 1 1 100%; /* Let them take up the full width */
+    min-width: auto; /* IMPORTANT: Remove the desktop min-width */
+  }
+
+  /* 3. Force the instruction list into a predictable 2-column grid */
+  .instruction-box ul {
+    display: grid; /* Re-state this to be sure */
+    grid-template-columns: repeat(2, 1fr); /* Force exactly 2 columns */
+    gap: 10px;
+  }
+}
+
+html, body {
+  overflow-x: hidden;
+}

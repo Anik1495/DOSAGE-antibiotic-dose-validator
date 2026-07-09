@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Medication Dose Validation</title>
+  <link rel="stylesheet" href="/static/css/styles.css" />
+  <style>
+    .flex-row {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 15px;
+      flex-wrap: wrap;
+    }
+
+    .flex-1 { flex: 1; min-width: 150px; }
+    .flex-2 { flex: 2; min-width: 250px; }
+    .flex-3 { flex: 3; min-width: 300px; }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+      font-size: 14px;
+    }
+
+    label {
+      font-weight: bold;
+      margin-bottom: 5px;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>DOSAGE</h1>
+    <p style="text-align: center; font-size: 16px; color: #555; max-width: 900px; margin: 0 auto 20px;">
+      An intelligent decision-support tool designed to help validate antibiotic prescriptions based on patient-specific parameters
+    </p>
+
+    <!-- Single Medication Validation Form -->
+    <div class="form-section">
+      <h2>Single Medication Check</h2>
+      <form id="single-medication-form">
+
+        <!-- Generic + Disease -->
+        <div class="flex-row">
+          <div class="flex-2"> <!-- generic is wider now -->
+            <label for="generic">Generic Name:</label>
+            <input type="text" id="generic" name="generic" list="generic-list" placeholder="Type generic name" required />
+            <datalist id="generic-list"></datalist>
+          </div>
+          <div class="flex-3"> <!-- disease is narrower now -->
+            <label for="disease">Disease:</label>
+            <input type="text" id="disease" name="disease" list="disease-list" placeholder="Select or type disease" required />
+            <datalist id="disease-list"></datalist>
+          </div>
+        </div>
+
+        <!-- Dose + Dose Unit + Administration -->
+        <div class="flex-row">
+          <div class="flex-2">
+            <label for="dose_daily">Dose (Daily):</label>
+            <input type="number" id="dose_daily" name="dose_daily" placeholder="Enter numeric dose" required />
+          </div>
+          <div class="flex-1">
+            <label for="dose_unit">Dose Unit:</label>
+            <select id="dose_unit" name="dose_unit" required>
+              <option value="mg">mg</option>
+              <option value="UNIT">UNIT</option>
+            </select>
+          </div>
+          <div class="flex-1">
+            <label for="administration">Administration:</label>
+            <select id="administration" name="administration" required>
+              <option value="PO">PO</option>
+              <option value="IM">IM</option>
+              <option value="IV">IV</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Age + Age Unit -->
+        <div class="flex-row">
+          <div class="flex-2">
+            <label for="age_number">Age:</label>
+            <input type="number" id="age_number" name="age_number" placeholder="Enter numeric age" required />
+          </div>
+          <div class="flex-1">
+            <label for="age_unit">Age Unit:</label>
+            <select id="age_unit" name="age_unit" required>
+              <option value="Y">Year</option>
+              <option value="M">Month</option>
+              <option value="D">Day</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Weight + CrCl -->
+        <div class="flex-row">
+          <div class="flex-2">
+            <label for="weight">Weight (kg):</label>
+            <input type="number" id="weight" name="weight" placeholder="Enter numeric weight" required />
+          </div>
+          <div class="flex-1">
+            <label for="crcl_rate">CrCl Rate:</label>
+            <input type="number" id="crcl_rate" name="crcl_rate" placeholder="Optional" />
+          </div>
+        </div>
+
+        <button type="submit">Validate Medication</button>
+      </form>
+
+      <div id="single-result" class="result" style="display: none;">
+        <h3>Validation Result</h3>
+        <pre
+          id="single-result-text"
+          style="
+            white-space: pre-wrap;
+            word-break: break-word;
+            overflow-x: auto;
+            max-width: 100%;
+            background-color: #f9f9f9;
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+          "
+        ></pre>
+      </div>
+    </div>
+
+    <!-- Batch Medication Validation Form -->
+    <div class="form-section">
+      <h2>Batch Medication Check</h2>
+
+      <!-- NEW: Flex container to hold the form and instructions -->
+      <div class="batch-container">
+
+        <!-- The original form goes here -->
+        <div class="batch-form">
+          <form id="batch-medication-form">
+            <label for="csv-file">Upload CSV File:</label>
+            <input type="file" id="csv-file" name="file" accept=".csv" required />
+            <button type="submit">Validate Batch</button>
+          </form>
+        </div>
+
+        <!-- NEW: Instruction box -->
+        <div class="instruction-box">
+          <h4>CSV Column Requirements</h4>
+          <p>Please ensure your CSV file has the following column headers exactly as written:</p>
+          <ul>
+            <li>
+              <code>generic</code>
+              <br><span>The generic name of the drug (e.g., Amoxicillin)</span>
+            </li>
+            <li>
+              <code>disease</code>
+              <br><span>The condition being treated (e.g., Pneumonia)</span>
+            </li>
+            <li>
+              <code>administration</code>
+              <br><span>Must be one of: PO, IM, or IV</span>
+            </li>
+            <li>
+              <code>dose_daily</code>
+              <br><span>Total daily dose as a number (e.g., 500)</span>
+            </li>
+            <li>
+              <code>dose_unit</code>
+              <br><span>Must be one of: mg or UNIT</span>
+            </li>
+            <li>
+              <code>age_number</code>
+              <br><span>Patient's age as a number (e.g., 45)</span>
+            </li>
+            <li>
+              <code>age_unit</code>
+              <br><span>Unit for age (Y=Year, M=Month, D=Day)</span>
+            </li>
+            <li>
+              <code>weight</code>
+              <br><span>Patient's weight in kilograms (e.g., 70.5)</span>
+            </li>
+            <li>
+              <code>crcl_rate</code>
+              <br><span>Creatinine clearance rate, optional (e.g., 85)</span>
+            </li>
+          </ul>
+          <p>The system is case-sensitive. All columns must be present.</p>
+        </div>
+      </div>
+
+      <div id="upload-status" style="display: none; font-weight: bold; color: #555; margin-top: 10px;"></div>
+
+      <div id="batch-result" class="result">
+        <h3>Validation Result</h3>
+        <div class="table-container">
+          <table id="result-table">
+            <thead></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <button id="download-button" style="display: none;">Download Results</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer style="text-align: center; margin-top: 40px; padding-top: 20px; border-top: 1px solid #ccc; font-size: 14px; color: #666;">
+    <div>
+      <strong>Institute of Research Innovation Incubation and Commercialization (IRIIC)</strong><br>
+      United International University (UIU)
+    </div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/awesomplete/1.1.5/awesomplete.min.js"></script>
+  <script src="/static/js/main.js"></script>
+</body>
+</html>
